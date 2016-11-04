@@ -57,9 +57,11 @@
       repository.push(item);
       this.setRepository(repository);
       this.fireEvent('change');
+      this.fireEvent('insert', item);
     }
 
     remove(query) {
+      const itemsToRemove = [];
       let k;
 
       const repository = this.getRepository().filter(item => {
@@ -68,11 +70,13 @@
             return true;
           }
         }
+        itemsToRemove.push(item);
         return false;
       });
 
       this.setRepository(repository);
       this.fireEvent('change');
+      this.fireEvent('delete', itemsToRemove);
     }
   };
 })();
