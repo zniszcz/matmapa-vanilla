@@ -5,17 +5,24 @@
     constructor(name) {
       super();
 
-      const localStorage = window.localStorage;
-      let repository;
+      this.name = name;
+      this.localStorage = window.localStorage;
 
-      this.getRepository = () => {
-        return repository || JSON.parse(localStorage.getItem(name)) || [];
-      };
+      this.setRepository([]);
+      this.loadLocalStorage();
+      this.addEventListener('change', () => this.loadLocalStorage());
+    }
 
-      this.setRepository = nodes => {
-        localStorage.setItem(name, JSON.stringify(repository = nodes));
-        this.fireEvent('change');
-      };
+    loadLocalStorage() {
+      this.repository = JSON.parse(this.localStorage.getItem(this.name)) || [];
+    }
+    getRepository() {
+      return this.repository;
+    }
+    setRepository(nodes) {
+      this.repository = nodes;
+      this.localStorage.setItem(this.name, JSON.stringify(nodes));
+      this.fireEvent('change');
     }
 
     find(query) {
@@ -57,26 +64,13 @@
       repository.push(item);
       this.setRepository(repository);
       this.fireEvent('change');
-      this.fireEvent('insert', item);
     }
 
-    remove(query) {
-      const itemsToRemove = [];
-      let k;
-
-      const repository = this.getRepository().filter(item => {
-        for (k in query) {
-          if (query[k] !== item[k]) {
-            return true;
-          }
-        }
-        itemsToRemove.push(item);
-        return false;
-      });
-
+    remove(deletedItem) {
+      const repository = this.getRepository();
+      repository.filter(item => deletedItem !== item);
       this.setRepository(repository);
       this.fireEvent('change');
-      this.fireEvent('delete', itemsToRemove);
     }
   };
 })();

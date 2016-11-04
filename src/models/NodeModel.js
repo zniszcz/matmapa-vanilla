@@ -2,7 +2,7 @@
   'use strict';
 
   app.NodeModel = class NodeModel extends app.Abstract.Model {
-    constructor(id = undefined, parent = [], name = '', notes = '') {
+    constructor(id, parent, name, notes) {
       super();
 
       this.set('id', id);
@@ -39,6 +39,10 @@
     removeParent(parentId) {
       const index = this.get('parent').indexOf(parentId);
       this.get('parent').splice(index, 1);
+      this.fireEvent('changed');
+    }
+    setId(id) {
+      this.set('id', id);
       this.fireEvent('changed');
     }
     setName(name) {

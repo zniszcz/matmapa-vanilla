@@ -5,44 +5,53 @@
     constructor(name, url = 'http://api-v1.matmapa.pl/') {
       super(name);
       this.url = url;
-
-      $.getJSON({
-        url: `${url}nodes`,
-        success: data => {
-          this.setRepository(data);
-        },
-      });
+      this.loadNodes();
       this.addEventListener('insert', item => this.insertToAPI(item));
       this.addEventListener('delete', items => this.removeToAPI(items));
     }
-    insertToAPI(item) {
+    loadNodes() {
+      this.setRepository([]);
+      $.getJSON({
+        url: `${this.url}nodes`,
+        success: data => {
+          data.forEach(item => {
+            const node = new app.NodeModel(item.id, item.parent, item.name, item.notes);
+            this.insert(node);
+          });
+        },
+      });
+    }
+    insertNode(item) {
       $.post({
         url: `${this.url}node/add`,
         data: {
           name: item.getName(),
           parent: item.getParent(),
-          noted: item.getNotes(),
+          note: item.getNotes(),
         },
         success: data => {
-          console.log('success!', data); // TODO: app.ConnectionObserver.fireEvent('add', item);
+          if (!data.error) {
+            item.setId(data.id);
+            this.insert(item);
+          }
         },
       });
     }
-    removeToAPI(items) {
-      for (const item in items) {
-        $.post({
-          url: `${this.url}node/delete`,
-          data: {
-            id: item.getId(),
-          },
-          success: data => {
-            console.log('success!', data);
-          },
-        });
-      }
+    removeNode(item) {
+      $.post({
+        url: `${this.url}node/delete`,
+        data: {
+          id: item.getId(),
+        },
+        success: data => {
+          console.log(data);
+          if (!data.error) {
+            this.remove(item);
+          }
+        },
+      });
     }
     update() {
-     // TODO: provide update
     }
 
   };
