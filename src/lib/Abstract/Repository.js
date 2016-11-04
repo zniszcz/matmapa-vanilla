@@ -2,26 +2,20 @@
   'use strict';
 
   app.Abstract.Repository = class Repository extends app.Abstract.Observable {
-    constructor(name) {
+    constructor(name, repository = []) {
       super();
 
       this.name = name;
-      this.localStorage = window.localStorage;
+      this.repository = repository;
 
       this.setRepository([]);
-      this.loadLocalStorage();
-      this.addEventListener('change', () => this.loadLocalStorage());
     }
 
-    loadLocalStorage() {
-      this.repository = JSON.parse(this.localStorage.getItem(this.name)) || [];
-    }
     getRepository() {
       return this.repository;
     }
     setRepository(nodes) {
       this.repository = nodes;
-      this.localStorage.setItem(this.name, JSON.stringify(nodes));
       this.fireEvent('change');
     }
 
