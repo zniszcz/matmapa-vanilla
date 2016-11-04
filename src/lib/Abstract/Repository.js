@@ -2,13 +2,10 @@
   'use strict';
 
   app.Abstract.Repository = class Repository extends app.Abstract.Observable {
-    constructor(name, repository = []) {
+    constructor(repository = []) {
       super();
 
-      this.name = name;
       this.repository = repository;
-
-      this.setRepository([]);
     }
 
     getRepository() {

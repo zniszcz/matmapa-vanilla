@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  app.NodeRepository = class NodeRepository extends app.Abstract.Repository {
+  app.NodeRepository = class NodeRepository extends app.LocalStorageRepository {
     constructor(name, url = 'http://api-v1.matmapa.pl/') {
       super(name);
       this.url = url;
