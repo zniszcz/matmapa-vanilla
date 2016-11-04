@@ -16,8 +16,6 @@ module.exports = {
   },
   concatOrder: {
     js: [
-        './node_modules/jquery/dist/jquery.js',
-        './node_modules/bootstrap/dist/js/bootstrap.js',
         './src/bootstrap.js',
         './src/lib/abstract.js',
         './src/lib/Abstract/Observable.js',
@@ -27,5 +25,11 @@ module.exports = {
         './src/lib/util.js',
         './src/**/!(bootstrap).js',
     ]
+  },
+  assets: {
+    js: [
+      './node_modules/jquery/dist/jquery.js',
+      './node_modules/bootstrap/dist/js/bootstrap.js',
+    ],
   },
 };
