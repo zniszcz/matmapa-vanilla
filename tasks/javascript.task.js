@@ -37,10 +37,10 @@ module.exports = gulp => {
   });
 
   // -- Main script tasks
-  
+
   // Task for serving scripts in developer mode.
   gulp.task(
-    'javascript', 
+    'javascript',
     [
       'build-javascript',
     ]
@@ -48,7 +48,7 @@ module.exports = gulp => {
 
   // Task for building scripts in production mode.
   gulp.task(
-    'javascript:prod', 
+    'javascript:prod',
     [
       'build-javascript:prod',
     ]
