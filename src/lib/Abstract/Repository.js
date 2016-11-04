@@ -8,18 +8,18 @@
       const localStorage = window.localStorage;
       let repository;
 
-      this.getLocalStorage = () => {
+      this.getRepository = () => {
         return repository || JSON.parse(localStorage.getItem(name)) || [];
       };
 
-      this.setLocalStorage = nodes => {
+      this.setRepository = nodes => {
         localStorage.setItem(name, JSON.stringify(repository = nodes));
         this.fireEvent('change');
       };
     }
 
     find(query) {
-      const repository = this.getLocalStorage();
+      const repository = this.getRepository();
       let k;
       const res = (repository.filter(item => {
         for (k in query) {
@@ -35,7 +35,7 @@
 
     update(update) {
       const id = update.id;
-      const repository = this.getLocalStorage();
+      const repository = this.getRepository();
       let i = repository.length;
       let k;
 
@@ -48,21 +48,21 @@
         }
       }
 
-      this.setLocalStorage(repository);
+      this.setRepository(repository);
       this.fireEvent('change');
     }
 
     insert(item) {
-      const repository = this.getLocalStorage();
+      const repository = this.getRepository();
       repository.push(item);
-      this.setLocalStorage(repository);
+      this.setRepository(repository);
       this.fireEvent('change');
     }
 
     remove(query) {
       let k;
 
-      const repository = this.getLocalStorage().filter(item => {
+      const repository = this.getRepository().filter(item => {
         for (k in query) {
           if (query[k] !== item[k]) {
             return true;
@@ -71,7 +71,7 @@
         return false;
       });
 
-      this.setLocalStorage(repository);
+      this.setRepository(repository);
       this.fireEvent('change');
     }
   };
