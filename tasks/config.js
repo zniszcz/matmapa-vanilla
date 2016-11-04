@@ -22,6 +22,7 @@ module.exports = {
         './src/lib/Abstract/Model.js',
         './src/lib/Abstract/View.js',
         './src/lib/Abstract/Controller.js',
+        './src/lib/Abstract/Repository.js',
         './src/lib/util.js',
         './src/**/!(bootstrap).js',
     ]
