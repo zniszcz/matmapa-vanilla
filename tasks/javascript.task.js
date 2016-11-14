@@ -36,12 +36,20 @@ module.exports = gulp => {
       .pipe(gulp.dest(config.path.js));
   });
 
+  gulp.task('add-assets', () => {
+    return gulp.src(config.assets.js)
+      .pipe(concat('assets.min.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest(config.path.js));
+  });
+
   // -- Main script tasks
 
   // Task for serving scripts in developer mode.
   gulp.task(
     'javascript',
     [
+      'add-assets',
       'build-javascript',
     ]
   );
@@ -50,6 +58,7 @@ module.exports = gulp => {
   gulp.task(
     'javascript:prod',
     [
+      'add-assets',
       'build-javascript:prod',
     ]
   );
