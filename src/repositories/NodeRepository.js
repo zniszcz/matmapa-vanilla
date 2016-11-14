@@ -50,14 +50,27 @@
           id: item.getId(),
         },
         success: data => {
-          console.log(data);
           if (!data.error) {
             this.remove(item);
           }
         },
       });
     }
-    update() {
+    updateNode(item) {
+      $.post({
+        url: `${this.url}node/edit`,
+        data: {
+          id: item.getId(),
+          name: item.getName(),
+          parents: item.getParent(),
+          note: item.getNotes(),
+        },
+        success: data => {
+          if (!data.error) {
+            this.update(item);
+          }
+        },
+      });
     }
 
   };
