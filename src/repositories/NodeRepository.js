@@ -37,6 +37,8 @@
           if (!data.error) {
             item.setId(data.id);
             this.insert(item);
+          } else {
+            console.debug(data);
           }
         },
       });

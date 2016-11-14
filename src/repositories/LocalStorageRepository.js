@@ -30,7 +30,7 @@
         if (item.properties.parent) {
           newItem.parent = item.properties.parent;
         }
-        if (item.properties.notes.length) {
+        if (item.properties.notes) {
           newItem.notes = item.properties.notes;
         }
         store.push(newItem);
