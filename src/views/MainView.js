@@ -6,11 +6,12 @@
       super(model, controller);
 
       this.setRootEl(document.body);
-      this.sidebar = new app.Sidebar(model);
+      this.topMenu = new app.TopMenu();
+      // this.sidebar = new app.Sidebar();
     }
     render() {
-      this.getRootEl().appendChild(this.sidebar.getRootEl());
-      this.sidebar.render();
+      this.getRootEl().appendChild(this.topMenu.getRootEl());
+      this.topMenu.render();
 
       if (app.utils.checkEventSupport()) {
         this.getRootEl().classList.add('touch');
