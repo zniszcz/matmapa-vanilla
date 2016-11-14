@@ -47,21 +47,18 @@
       }
 
       this.setRepository(repository);
-      this.fireEvent('change');
     }
 
     insert(item) {
       const repository = this.getRepository();
       repository.push(item);
       this.setRepository(repository);
-      this.fireEvent('change');
     }
 
     remove(deletedItem) {
       const repository = this.getRepository();
       repository.filter(item => deletedItem !== item);
       this.setRepository(repository);
-      this.fireEvent('change');
     }
   };
 })();

@@ -2,12 +2,12 @@
   'use strict';
 
   app.NodeModel = class NodeModel extends app.Abstract.Model {
-    constructor(id, parent, name, notes) {
+    constructor(id, name, parent, notes) {
       super();
 
       this.set('id', id);
-      this.set('parent', parent);
       this.set('name', name);
+      this.set('parent', parent);
       this.set('notes', notes);
 
       return this;
@@ -43,6 +43,10 @@
     }
     setId(id) {
       this.set('id', id);
+      this.fireEvent('changed');
+    }
+    setParents(parents) {
+      this.set('parent', parents);
       this.fireEvent('changed');
     }
     setName(name) {

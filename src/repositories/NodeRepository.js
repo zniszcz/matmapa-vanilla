@@ -5,19 +5,23 @@
     constructor(name, url = 'http://api-v1.matmapa.pl/') {
       super(name);
       this.url = url;
-      this.loadNodes();
-      this.addEventListener('insert', item => this.insertToAPI(item));
-      this.addEventListener('delete', items => this.removeToAPI(items));
+      this.load();
     }
-    loadNodes() {
-      this.setRepository([]);
+    load() {
+      this.loadLocalStorage();
+
+      // TODO: send this request only if last-modification on server is earlier than this in localStorage
       $.getJSON({
         url: `${this.url}nodes`,
         success: data => {
+          const newRepository = [];
+
           data.forEach(item => {
-            const node = new app.NodeModel(item.id, item.parent, item.name, item.notes);
-            this.insert(node);
+            const node = new app.NodeModel(item.id, item.name, item.parent, item.notes);
+            newRepository.push(node);
           });
+
+          this.setRepository(newRepository);
         },
       });
     }
