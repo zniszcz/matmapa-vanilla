@@ -3,12 +3,12 @@
 
   app.Wrapper = class Wrapper extends app.Abstract.View {
     constructor() {
-      super();
+      const model = new app.NodeRepository('nodes');
+      super(model);
       this.setRootEl(document.createElement('main'));
 
       // xD
 
-      const model = new app.NodeRepository('nodes');
       this.table = new app.NodesTable(model);
     }
     render() {

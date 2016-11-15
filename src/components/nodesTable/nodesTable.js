@@ -26,7 +26,7 @@
         </tr>
       `;
 
-      const nodesTableInput = new NodesTableInput();
+      const nodesTableInput = new app.AddNodeInput(this.getModel());
       this.tfoot.innerHTML = `
         <tr>
           <td colspan='4'></td>
@@ -37,6 +37,7 @@
       nodesTableInput.render();
     }
     loadItems() {
+      this.tbody.innerHTML = '';
       this.getModel().getRepository().forEach(model => {
         const row = new NodesTableRow(model);
         this.tbody.appendChild(row.getRootEl());
@@ -75,40 +76,6 @@
       const td = document.createElement('td');
       td.textContent = this.getModel().getNotes();
       this.getRootEl().appendChild(td);
-    }
-  }
-
-  class NodesTableInput extends app.Abstract.View {
-    constructor(model) {
-      super(model, new NodesTableInputController(model));
-      this.setRootEl(document.createElement('form'));
-      this.getRootEl().addEventListener('submit', event => this.getController().onSumbit(event));
-    }
-    render() {
-      const container = document.createElement('div');
-      container.classList.add('input-group');
-      this.getRootEl().appendChild(container);
-
-      const input = document.createElement('input');
-      input.setAttribute('type', 'text');
-      input.setAttribute('name', 'inputName');
-      input.classList.add('form-control');
-      this.getRootEl().appendChild(input);
-
-      const button = document.createElement('button');
-      button.textContent = '+';
-      button.classList.add('btn', 'btn-primary', 'input-group-addon');
-      this.getRootEl().appendChild(button);
-    }
-  }
-
-  class NodesTableInputController extends app.Abstract.Controller {
-    constructor(model) {
-      super(model);
-    }
-    onSumbit(event) {
-      event.preventDefault();
-      
     }
   }
 })();
