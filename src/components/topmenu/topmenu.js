@@ -4,49 +4,28 @@
     constructor() {
       super();
       this.setRootEl(document.createElement('nav'));
-      this.container = new TopMenuContainer();
+      this.topMenuList = new TopMenuList();
+      this.container = document.createElement('div');
     }
     render() {
       this.getRootEl().classList.add('navbar', 'navbar-inverse', 'navbar-fixed-top');
       this.getRootEl().setAttribute('role', 'navigation');
-      this.getRootEl().appendChild(this.container.getRootEl());
+      this.getRootEl().appendChild(this.container);
 
-      this.container.render();
+      this.topMenuList.render();
+      this.renderContainer();
+    }
+    renderContainer() {
+      this.container.classList.add('container-fluid');
+      this.container.innerHTML = `
+        <div class='navbar-header'>
+          <a href='#/' class='navbar-brand'>Mapa Matematyki</a>
+        </div>
+        ${this.topMenuList.getRootEl().outerHTML}
+      `;
+      console.dir(this.topMenuList.getRootEl().outerHTML);
     }
   };
-
-  class TopMenuContainer extends app.Abstract.View {
-    constructor() {
-      super();
-      this.setRootEl(document.createElement('div'));
-      this.brand = new TopMenuBrand();
-      this.list = new TopMenuList();
-    }
-    render() {
-      this.getRootEl().classList.add('container-fluid');
-      this.getRootEl().appendChild(this.brand.getRootEl());
-      this.getRootEl().appendChild(this.list.getRootEl());
-
-      this.brand.render();
-      this.list.render();
-    }
-  }
-
-  class TopMenuBrand extends app.Abstract.View {
-    constructor() {
-      super();
-      this.setRootEl(document.createElement('div'));
-    }
-    render() {
-      const link = document.createElement('a');
-      link.setAttribute('href', '#');
-      link.classList.add('navbar-brand');
-      link.textContent = 'Mapa Matematyki';
-
-      this.getRootEl().classList.add('navbar-header');
-      this.getRootEl().appendChild(link);
-    }
-  }
 
   class TopMenuList extends app.Abstract.View {
     constructor() {
@@ -70,8 +49,7 @@
 
     }
     createElements() {
-      const res = this.elements.map(item => new TopMenuListElement(item.name, item.link));
-      return res;
+      return this.elements.map(item => new TopMenuListElement(item.name, item.link));
     }
   }
 
