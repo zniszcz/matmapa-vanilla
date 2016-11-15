@@ -23,7 +23,6 @@
         </div>
         ${this.topMenuList.getRootEl().outerHTML}
       `;
-      console.dir(this.topMenuList.getRootEl().outerHTML);
     }
   };
 
