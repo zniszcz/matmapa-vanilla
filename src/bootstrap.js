@@ -12,6 +12,6 @@
       })
       .addRoute('dupa', () => console.log('dupa'))
       .addRoute('node', () => console.log('dupa'))
-      .otherwise('');
+      .otherwise('/');
   });
 })();

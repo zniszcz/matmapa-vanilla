@@ -45,7 +45,6 @@
       this.routes[href]();
     }
     parseHash() {
-
       const parsedHash = window.location.hash.split('/');
       const result = {};
       const isCorrectHash = (parsedHash[0] === '#');
