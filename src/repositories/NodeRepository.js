@@ -62,7 +62,7 @@
         data: {
           id: item.getId(),
           name: item.getName(),
-          parents: item.getParent(),
+          parent: item.getParent(),
           note: item.getNotes(),
         },
         success: data => {

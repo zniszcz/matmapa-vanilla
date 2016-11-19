@@ -26,27 +26,12 @@
       return this.get('notes');
     }
 
-    addParent(parentId) {
-      const parent = this.get('parent');
-      for (let i = 0; i < parent.length; i++) {
-        if (parent[i] === parentId) {
-          return;
-        }
-      }
-      parent.push(parentId);
-      this.fireEvent('changed');
-    }
-    removeParent(parentId) {
-      const index = this.get('parent').indexOf(parentId);
-      this.get('parent').splice(index, 1);
-      this.fireEvent('changed');
-    }
     setId(id) {
       this.set('id', id);
       this.fireEvent('changed');
     }
-    setParents(parents) {
-      this.set('parent', parents);
+    setParent(parent) {
+      this.set('parent', parent);
       this.fireEvent('changed');
     }
     setName(name) {
