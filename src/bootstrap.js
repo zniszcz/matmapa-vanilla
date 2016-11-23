@@ -3,15 +3,18 @@
   window.app = {};
 
   document.addEventListener('DOMContentLoaded', function () {
+    const view = new app.MainView();
+
+    view.render();
+
     app.router = new app.Router();
 
     app.router
-      .addRoute('', function () {
-        const view = new app.NodeView();
-        view.render();
+      .addRoute('node', function () {
+        const nodeView = new app.NodeListView();
+        view.getWrapper().clear().addComponent(nodeView);
+        nodeView.render();
       })
-      .addRoute('dupa', () => console.log('dupa'))
-      .addRoute('node', () => console.log('dupa'))
-      .otherwise('/');
+      .otherwise('/node');
   });
 })();

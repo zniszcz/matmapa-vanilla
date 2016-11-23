@@ -25,6 +25,7 @@ module.exports = {
         './src/lib/Abstract/Repository.js',
         './src/lib/helpers/**/*.js',
         './src/lib/util.js',
+        // './src/services/**/*.js',
         './src/**/!(bootstrap).js',
     ]
   },

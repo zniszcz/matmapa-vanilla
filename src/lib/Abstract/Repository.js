@@ -19,7 +19,7 @@
     find(query) {
       const repository = this.getRepository();
       let k;
-      const res = (repository.filter(item => {
+      const res = new app.Collection(repository.filter(item => {
         for (k in query) {
           if (query[k] !== item[k]) {
             return false;

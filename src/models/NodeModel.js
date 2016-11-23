@@ -26,19 +26,8 @@
       return this.get('notes');
     }
 
-    addParent(parentId) {
-      const parent = this.get('parent');
-      for (let i = 0; i < parent.length; i++) {
-        if (parent[i] === parentId) {
-          return;
-        }
-      }
-      parent.push(parentId);
-      this.fireEvent('changed');
-    }
-    removeParent(parentId) {
-      const index = this.get('parent').indexOf(parentId);
-      this.get('parent').splice(index, 1);
+    setParent(parent) {
+      this.set('parent', parent);
       this.fireEvent('changed');
     }
     setId(id) {
@@ -56,6 +45,18 @@
     setNotes(notes) {
       this.set('notes', notes);
       this.fireEvent('changed');
+    }
+
+    update(nodeModel) {
+      if (this.getName() !== nodeModel.getName()) {
+        this.setName(nodeModel.getName());
+      }
+      if (this.getParent() !== nodeModel.getParent()) {
+        this.setParent(nodeModel.getParent());
+      }
+      if (this.getNotes() !== nodeModel.getNotes()) {
+        this.setNotes(nodeModel.getNotes());
+      }
     }
   };
 

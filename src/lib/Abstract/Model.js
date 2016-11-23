@@ -24,7 +24,7 @@
       this.fireEvent('change');
     }
 
-    cleanCollection() {
+    clean() {
       this.properties = {};
       this.fireEvent('change');
     }

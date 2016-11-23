@@ -1,77 +1,45 @@
 (function () {
+
   'use strict';
 
-  app.NodeRepository = class NodeRepository extends app.LocalStorageRepository {
-    constructor(name, url = 'http://api-v1.matmapa.pl/') {
-      super(name);
-      this.url = url;
-      this.load();
+  class NodeRepository extends app.APIRepository {
+    constructor() {
+      super();
     }
-    load() {
-      this.loadLocalStorage();
+    getNode(id) {
+      const query = new app.NodeQueryModel({id});
+      let result = this.find(query)[0];
 
-      // TODO: send this request only if last-modification on server is earlier than this in localStorage
-      $.getJSON({
-        url: `${this.url}nodes`,
-        success: data => {
-          const newRepository = [];
+      if (!result) {
+        result = new app.NodeModel(id);
+        this.insert(result);
+        // if (!id) {
+        this.loadItem(id);
+        // }
+      }
 
-          data.forEach(item => {
-            const node = new app.NodeModel(item.id, item.name, item.parent, item.notes);
-            newRepository.push(node);
-          });
+      return result;
+    }
+    getChildrenOf(parentId) {
+      const query = new app.NodeQueryModel({parent: parentId});
+      const result = this.find(query);
 
-          this.setRepository(newRepository);
-        },
-      });
-    }
-    insertNode(item) {
-      $.post({
-        url: `${this.url}node/add`,
-        data: {
-          name: item.getName(),
-          parent: item.getParent(),
-          note: item.getNotes(),
-        },
-        success: data => {
-          if (!data.error) {
-            item.setId(data.id);
-            this.insert(item);
-          } else {
-            console.debug(data);
-          }
-        },
-      });
-    }
-    removeNode(item) {
-      $.post({
-        url: `${this.url}node/delete`,
-        data: {
-          id: item.getId(),
-        },
-        success: data => {
-          if (!data.error) {
-            this.remove(item);
-          }
-        },
-      });
-    }
-    updateNode(item) {
-      $.post({
-        url: `${this.url}node/edit`,
-        data: {
-          id: item.getId(),
-          name: item.getName(),
-          parents: item.getParent(),
-          note: item.getNotes(),
-        },
-        success: data => {
-          if (!data.error) {
-            this.update(item);
-          }
-        },
-      });
-    }
+      this.loadChilds(parentId, result);
 
-  };
+      return result;
+    }
+    addNode(model) {
+      this.insertItem(model);
+    }
+    updateNode(model) {
+      this.updateItem(model);
+    }
+    removeNode(id) {
+      const query = new app.NodeQueryModel({id});
+      this.removeItem(query);
+    }
+  }
+
+  app.setService('NodeRepository', new NodeRepository());
+
 })();
