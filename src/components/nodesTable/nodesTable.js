@@ -58,7 +58,6 @@
       button.innerHTML = `
             <span class=''>usuń</span>
       `;
-      button.addEventListener('click', event => this.removeButton(event));
       container.appendChild(button);
       container.innerHTML += `
           <span class='nodesTableRow__name'>${this.name}</span>
@@ -66,6 +65,14 @@
       `;
 
       this.getRootEl().appendChild(container);
+
+      $('.nodesTableRow__delete').click( event => {
+        event.stopPropagation();
+        console.log('dupa');
+      });
+      button.addEventListener('click', event => {
+        console.log('dupa-aaaaaa');
+      });
     }
     removeButton(event) {
       event.preventDefault();
