@@ -43,6 +43,8 @@
       this.id = model.getId();
       this.name = model.getName();
       this.notes = model.getNotes();
+      this.container = document.createElement('div');
+      this.button = document.createElement('button');
     }
     render() {
       this.getRootEl().addEventListener('click', () => {
@@ -50,33 +52,29 @@
       });
       this.getRootEl().classList.add('nodesTableRow');
 
-      const container = document.createElement('div');
-      container.setAttribute('data-id', this.id);
-      container.classList.add('nodesTableRow__container');
-      const button = document.createElement('button');
-      button.classList.add('nodesTableRow__delete', 'btn', 'btn-default', 'btn-sm');
-      button.innerHTML = `
+      this.container.setAttribute('data-id', this.id);
+      this.container.classList.add('nodesTableRow__container');
+      this.button.classList.add('nodesTableRow__delete', 'btn', 'btn-default', 'btn-sm');
+      this.button.innerHTML = `
             <span class=''>usuń</span>
       `;
-      container.appendChild(button);
-      container.innerHTML += `
+
+      this.button.addEventListener('click', function (event) {
+        event.stopPropagation();
+        console.log('dupa-aaaaaa');
+      });
+      this.container.innerHTML = `
           <span class='nodesTableRow__name'>${this.name}</span>
           <span class='nodesTableRow__notes'>${this.notes}</span>
       `;
 
-      this.getRootEl().appendChild(container);
+      this.container.appendChild(this.button);
+      this.getRootEl().appendChild(this.container);
 
-      $('.nodesTableRow__delete').click( event => {
+      /* $('.nodesTableRow__delete').click( event => {
         event.stopPropagation();
         console.log('dupa');
-      });
-      button.addEventListener('click', event => {
-        console.log('dupa-aaaaaa');
-      });
-    }
-    removeButton(event) {
-      event.preventDefault();
-      event.stopPropagation();
+      }); */
     }
   }
 })();
